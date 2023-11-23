@@ -10,7 +10,7 @@ import java.util.List;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
-public class UserDaoJDBCImpl implements UserDao {
+public abstract class UserDaoJDBCImpl implements UserDao {
 
     private static final Connection connection = Util.getConnection();
 
@@ -37,7 +37,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-            "INSERT INTO users (name, lastName, age) VALUES (?,?,?)")) {
+            "INSERT INTO user (name, lastName, age) VALUES (?,?,?)")) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setInt(3, age);
@@ -50,7 +50,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-            "SELECT * FROM users WHERE id = ?")) {
+            "SELECT * FROM user WHERE id = ?")) {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -61,7 +61,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         try (ResultSet resultSet = connection.createStatement()
-            .executeQuery("SELECT * FROM Users")) {
+            .executeQuery("SELECT * FROM user")) {
             while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getLong("id"));

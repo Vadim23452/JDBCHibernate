@@ -1,6 +1,7 @@
 package jm.task.core.jdbc;
 
 import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        UserServiceImpl userService = new UserServiceImpl();
+        UserService userService = new UserServiceImpl();
         List<User> userList = new ArrayList<>();
         User vadim = new User("Vadim", "Semenyta",(byte)26);
         User tatyana = new User("Tatyana", "Varshavskaya",(byte)24);
@@ -18,9 +19,9 @@ public class Main {
         userList.add(tatyana);
         userList.add(petr);
         userList.add(alexandra);
-        userService.createUsersTable();
+        //userService.createUsersTable();
 
-        for (User user : userList) {
+      for (User user : userList) {
             userService.saveUser(user.getName(), user.getLastName(), user.getAge());
             System.out.println("User с именем : " + user.getName() + " добавлен в базу данных");
         }
